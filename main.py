@@ -1,7 +1,7 @@
 import asyncio
 import zipfile
-import pptxParser
-import my_openai
+import parser
+import openai_pptx
 from pathlib import Path
 import util
 import os
@@ -24,7 +24,7 @@ async def get_explanation_to_pptx_into_json(pptx_path, pptx_topic=None, path_to_
 
     """
     try:
-        presentation_as_list_of_slides = pptxParser.get_presentation_as_list_of_slides(pptx_path)
+        presentation_as_list_of_slides = parser.get_presentation_as_list_of_slides(pptx_path)
     except zipfile.BadZipfile as e:
         print('this not a power point file')
         return
@@ -32,7 +32,7 @@ async def get_explanation_to_pptx_into_json(pptx_path, pptx_topic=None, path_to_
     if not pptx_topic:
         pptx_topic = util.get_file_name_without_extension(pptx_path)
 
-    presentation_explanation_slides_list = await my_openai.async_get_explanation_to_presentation(
+    presentation_explanation_slides_list = await openai_pptx.async_get_explanation_to_presentation(
                                                                   presentation_as_list_of_slides, topic=pptx_topic)
 
     if not path_to_json:
@@ -66,5 +66,5 @@ async def main():
         asyncio.create_task(get_explanation_to_pptx_into_json(pptx_path=pptx_path, pptx_topic=pptx_topic))
 
 
-if _name_ == '_main_':
+if __name__ == '__main__':
     asyncio.run(main())

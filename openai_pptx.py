@@ -12,9 +12,9 @@ if platform.system() == 'Windows':
 
 load_dotenv()
 
-OPENAI_KEY = os.getenv("OPENAI_TOKEN")
+OPENAI_KEY = os.getenv("OPENAI_KEY")
 openai.api_key = OPENAI_KEY
-
+print(OPENAI_KEY)
 
 def genarate_prompt_to_slide(slide_text, topic):
     """
