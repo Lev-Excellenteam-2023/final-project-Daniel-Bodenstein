@@ -32,7 +32,7 @@ def upload_file():
         return "It's not a .pptx file", 400
 
     uid = '123'
-    r = save_list_as_json({"name": file.filename, "slides": slides}, './slides_to_explain', uid)
+    r = save_list_as_json({"name": file.filename, "slides": slides}, './../files/slides_to_explain', uid)
 
     #return jsonify({'b': slides})
     return r
