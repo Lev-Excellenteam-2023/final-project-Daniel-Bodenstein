@@ -91,3 +91,6 @@ def get_first_file_start_with(folder_path, start):
         return None
     return matching_files[0]
 
+
+if __name__ == "__main__":
+    asyncio.run(run_loop())
