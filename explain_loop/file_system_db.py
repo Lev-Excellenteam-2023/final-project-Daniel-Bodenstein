@@ -1,6 +1,6 @@
 import os
 import json
-import file_system_db_util as util
+import explain_loop as el
 
 
 class explainer_file_db():
@@ -23,7 +23,7 @@ class explainer_file_db():
         Returns:
             list: List of UIDs of uploaded files.
         """
-        return [util.extract_uid_from_file_name(file) for file in os.listdir(self.UPLOAD_DIR) if os.path.isfile(os.path.join(self.UPLOAD_DIR, file))]
+        return [el.extract_uid_from_file_name(file) for file in os.listdir(self.UPLOAD_DIR) if os.path.isfile(os.path.join(self.UPLOAD_DIR, file))]
 
     def get_all_download_uid(self):
         """
@@ -32,7 +32,7 @@ class explainer_file_db():
         Returns:
             list: List of UIDs of downloaded files.
         """
-        return [util.extract_uid_from_file_name(file) for file in os.listdir(self.DOWNLOADS_DIR) if os.path.isfile(os.path.join(self.DOWNLOADS_DIR, file))]
+        return [el.extract_uid_from_file_name(file) for file in os.listdir(self.DOWNLOADS_DIR) if os.path.isfile(os.path.join(self.DOWNLOADS_DIR, file))]
 
     def save_to_download(self, obj, uid, name):
         """
@@ -49,7 +49,7 @@ class explainer_file_db():
         if not name.endswith(".json"):
             name += '.json'
 
-        new_name, uid = util.generate_filename(name, uid)
+        new_name, uid = el.generate_filename(name, uid)
 
         with open(os.path.join(self.DOWNLOADS_DIR, new_name), 'w') as file:
             # Convert the object to a JSON string and write it to the file
@@ -66,7 +66,7 @@ class explainer_file_db():
         Returns:
             object: The object loaded from the file.
         """
-        file_path = util.get_first_file_start_with(self.DOWNLOADS_DIR, uid)
+        file_path = el.get_first_file_start_with(self.DOWNLOADS_DIR, uid)
 
         if not file_path:
             return None
@@ -86,7 +86,7 @@ class explainer_file_db():
         Returns:
             object: The object loaded from the file.
         """
-        file_path = util.get_first_file_start_with(self.UPLOAD_DIR, uid)
+        file_path = el.get_first_file_start_with(self.UPLOAD_DIR, uid)
 
         if not file_path:
             return None
