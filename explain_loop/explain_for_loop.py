@@ -27,7 +27,7 @@ async def explain_presentation(slides, name, uid):
         dict: Dictionary containing the UID, explanation, and name.
     """
     explain = await ai.async_get_explanation_to_presentation(slides, name)
-    return {'uid': uid, 'explain': explain, 'name': name}
+    return {'uid': uid, 'data': explain, 'name': name}
 
 
 async def explain_new_presentation():
@@ -45,14 +45,14 @@ async def explain_new_presentation():
         if uid in already_processed_files_uid:
             continue
 
-        presentation = db.get_from_uploads(uid)
+        presentation = db.get_from_uploads(uid)['data']
 
-        tasks.append(explain_presentation(presentation['slides'], presentation['topic'], uid))
+        tasks.append(explain_presentation(presentation['slides'], presentation['name'], uid))
 
     explanations = await asyncio.gather(*tasks)
 
     for exp in explanations:
-        db.save_to_download(exp['explain'], exp['uid'], exp['name'])
+        db.save_to_download(exp['data'], exp['uid'], exp['name'])
         logger.info('Explained: ' + exp['name'])
         already_processed_files_uid.add(exp['uid'])
 
