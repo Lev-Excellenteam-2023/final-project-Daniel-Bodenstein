@@ -47,7 +47,6 @@ async def explain_new_presentation():
 
         presentation = db.get_from_uploads(uid)
 
-        # todo change topic to name
         tasks.append(explain_presentation(presentation['slides'], presentation['topic'], uid))
 
     explanations = await asyncio.gather(*tasks)
@@ -56,3 +55,8 @@ async def explain_new_presentation():
         db.save_to_download(exp['explain'], exp['uid'], exp['name'])
         logger.info('Explained: ' + exp['name'])
         already_processed_files_uid.add(exp['uid'])
+
+if __name__ == '__main__':
+    logger.info("Starting the explanation process...")
+    asyncio.run(explain_new_presentation())
+    logger.info("Explanation process completed.")
