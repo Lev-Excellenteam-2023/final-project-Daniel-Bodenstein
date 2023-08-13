@@ -3,7 +3,7 @@ from datetime import datetime
 from sqlalchemy import select
 from sqlalchemy.orm import joinedload, subqueryload
 
-from orm import User, Upload, _session, Status
+from sql_tables import User, Upload, _session, Status
 
 
 class SqlQueries:
