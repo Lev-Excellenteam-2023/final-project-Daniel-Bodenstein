@@ -55,10 +55,16 @@ class Filedb:
             data = json.load(file)
 
         uid , timestamp, original_name = util.extract_data_from_file_name(file_name_start_with_uid)
-        return {'uid':uid, 'data': data, 'original name': original_name, 'timestamp': timestamp}
+        return {'uid': uid, 'data': data, 'original name': original_name, 'timestamp': timestamp}
 
     def get_all_upload_files_uid(self):
         return [util.extract_data_from_file_name(fname)[0] for fname in self.get_all_files_names(self.UPLOAD_DIR)]
 
     def get_all_files_names(self, dir):
         return [entry.name for entry in os.scandir(dir) if entry.is_file()]
+
+    def save(self, presentation_as_list_of_slides, upload_path):
+        upload_path = ''
+
+    def get(self, path):
+        peth = ''
